@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "374947335563",
+    "project_id": "queueup-504c1",
+    "storage_bucket": "queueup-504c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:374947335563:android:8ab708d8ef5ea1abf3338e",
+        "android_client_info": {
+          "package_name": "com.example.queueup"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYdbCtHRNeGK0QLtA9LniwHJRy61fVkRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">QueueUp</string>
+    <string name="login">Login</string>
+    <string name="refresh">Refresh</string>
+    <string name="click_to_login">Click to login</string>
+    <string name="click_to_register">Click to register</string>
+    <string name="Join_Me">Join Me</string>
+    <string name="logout">Logout</string>
+    <string name="people_in_the_line">Hello %1$s! %2$d people before you...</string>
+    <string name="Start">Start</string>
+    <string name="Add_Machines">Init Machines</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+
+</resources>
