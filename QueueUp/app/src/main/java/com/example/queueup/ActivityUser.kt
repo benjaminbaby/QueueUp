@@ -41,7 +41,7 @@ class ActivityUser : AppCompatActivity() {
     private var timeCountDown: CountDownTimer? = null
     private var timeProgress = 0
     private var pauseOffSet: Long = 0
-    private var isStart = true
+
     var usersBeforeCurrentUser = 0
     private var alreadyAdd = false
     var statusMachine = "unavailable"
@@ -55,7 +55,8 @@ class ActivityUser : AppCompatActivity() {
     private val notificationId = 101
 
     //handler
-    val handler = Handler(Looper.getMainLooper())
+    private val handler = Handler(Looper.getMainLooper())
+
 
 
 
@@ -139,6 +140,9 @@ class ActivityUser : AppCompatActivity() {
 
                         if (status == "available" && usersBeforeCurrentUser < 2) {
 
+
+
+
                             createNotificationChannel()
                             sendNotification()
                             statusMachine = status
@@ -172,6 +176,7 @@ class ActivityUser : AppCompatActivity() {
 
         Log.d("available", "available: $statusMachine")
 
+
         handler.postDelayed({
             if (usersBeforeCurrentUser < 2) {
                 deleteUserFromDatabase()
@@ -201,6 +206,8 @@ class ActivityUser : AppCompatActivity() {
 
     override fun onStop() {
         handler.removeCallbacksAndMessages(null)
+
+
         super.onStop()
 
 
@@ -208,6 +215,8 @@ class ActivityUser : AppCompatActivity() {
 
 
     // create notification
+
+
 
     private fun createNotificationChannel() {
         Log.d("createNotificationChannel", "createNotificationChannel:")
@@ -252,18 +261,18 @@ class ActivityUser : AppCompatActivity() {
     private fun checkMachineStatus() {
         machineRef.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var machineStatus = "unavailable"
+
                 for (machineSnapshot in dataSnapshot.children) {
                     val machineId = machineSnapshot.key
                     val machineName = machineSnapshot.child("name").getValue(String::class.java)
                     val status = machineSnapshot.child("status").getValue(String::class.java)
                     if (machineId != null && machineName != null && status != null) {
                         if (status == "available"  && usersBeforeCurrentUser < 2) {
-                            machineStatus = status
+
                             // Machine is available, check user input
                             Log.d("available", "machineId: $machineId")
                             currentMachineKey = machineId
-                            updateMachineStatus("unavailable", machineId)
+
 
                             Log.d("available", "machineId: $machineId")
 
@@ -293,7 +302,8 @@ class ActivityUser : AppCompatActivity() {
 
         binding.start.setOnClickListener{
 
-            startTimerSetup()
+
+            startTimerSetup(machineId)
 
 
         }
@@ -301,6 +311,7 @@ class ActivityUser : AppCompatActivity() {
 
 
     }
+    // code resource : https://drive.google.com/drive/folders/1rj4LmM0neeT1FvUv2ODJaHWqjwpxxWcy
     private fun setTimeFunction() {
         Log.d("test3", "test3: ")
         val timeDialog = Dialog(this)
@@ -327,34 +338,18 @@ class ActivityUser : AppCompatActivity() {
 
         timeDialog.show()
     }
-    private fun startTimerSetup()
+    private fun startTimerSetup(machineId:String)
     {
 
         if (timeSelected>timeProgress)
         {
-            if (isStart)
-            {
-                binding.start.text = "Pause"
-                startTimer(pauseOffSet)
-                isStart = false
-            }
-            else
-            {
-                isStart =true
-                binding.start.text = "Resume"
-                timePause()
-            }
+            updateMachineStatus("unavailable", machineId)
+            startTimer(pauseOffSet)
+
         }
         else
         {
             Toast.makeText(this,"Enter Time",Toast.LENGTH_SHORT).show()
-        }
-    }
-    private fun timePause()
-    {
-        if (timeCountDown!=null)
-        {
-            timeCountDown!!.cancel()
         }
     }
 
@@ -380,6 +375,8 @@ class ActivityUser : AppCompatActivity() {
                 deleteUserFromDatabase()
 
                 updateMachineStatus("available", currentMachineKey)
+
+
 
                 val intent = Intent(applicationContext, ActivityWelcome::class.java)
                 startActivity(intent)
